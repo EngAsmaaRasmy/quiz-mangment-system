@@ -63,7 +63,7 @@ This project is a multi-tenant **Quiz Management System** built using Laravel, F
    DB_PORT=3306
    DB_DATABASE=quiz_management
    DB_USERNAME=root
-   DB_PASSWORD=secret
+   DB_PASSWORD=
    ```
 
 4. **Start the application using Docker Compose**:
@@ -78,13 +78,13 @@ This project is a multi-tenant **Quiz Management System** built using Laravel, F
    docker exec -it quiz_app php artisan migrate --seed
    ```
 
-6. **Access the application** in your browser at [http://quiz.test](http://quiz.test).
+6. **Access the application** in your browser at [http://quiz.test/clients](http://quiz.test/clients).
 
 ---
 
 ## Creating a Tenant
 
-1. **Open the application** at the specified `APP_URL` (e.g., `http://quiz.test`).
+1. **Open the application** at the specified `APP_URL` (e.g., `http://quiz.test/clients`).
 2. **Fill in the tenant creation form** with the required details (e.g., tenant name, email, and password).
 3. **Submit the form** to create a new tenant.
 4. **Check your email** for login credentials.
@@ -93,6 +93,11 @@ This project is a multi-tenant **Quiz Management System** built using Laravel, F
 ---
 
 ## Managing Users and Quizzes
+
+1. **Open the application** at the specified `APP_URL` (e.g., `http://quiz.test/admin`).
+2. **Access the admin dashboard** using the following default credentials:
+   - **Email: test@test.com**
+   - **Password: 123456**
 
 ### Managing Users
 
@@ -107,6 +112,7 @@ This project is a multi-tenant **Quiz Management System** built using Laravel, F
 2. Each quiz can have multiple questions, and each question can have up to 4 answer options.
 3. Correct answers are marked during quiz creation.
 4. Members can solve quizzes, and scores are calculated automatically.
+5. Score Send to Member email.
 
 ---
 
@@ -128,17 +134,28 @@ This project is a multi-tenant **Quiz Management System** built using Laravel, F
 
 1. **users**: Stores user details and roles.
 2. **tenants**: Stores tenant information.
-3. **quizzes**: Stores quizzes created by admins.
-4. **questions**: Stores questions associated with quizzes.
-5. **answers**: Stores possible answers for each question.
-6. **user\_answers**: Stores user-submitted answers.
+3. **domains**: Stores tenant domains.
+4. **roles**: Stores role information for users.
+5. **permissions**: Stores permission information.
+6. **role_has_permissions**: Associates roles with permissions.
+7. **model_has_roles**: Associates models (e.g., users) with roles.
+8. **model_has_permissions**: Associates models (e.g., users) with permissions.
+9. **quizzes**: Stores quizzes created by admins.
+10. **questions**: Stores questions associated with quizzes.
+11. **answers**: Stores possible answers for each question.
+12. **user_answers**: Stores user-submitted answers.
+13. **quiz_results**: Stores user-quiz scores.
 
 ### Relationships
 
 - A **tenant** has many **users**.
+- A **tenant** has many **domains**.
+- A **user** can have many **roles**.
+- A **role** can have many **permissions**.
 - A **quiz** has many **questions**.
 - A **question** has many **answers**.
-- A **user** can submit many **user\_answers**.
+- A **user** can submit many **user_answers**.
+- A **user** can have many **quiz_results**.
 
 ---
 
