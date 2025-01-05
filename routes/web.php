@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Clients\App\Http\Controllers\ClientsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,4 +13,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-

@@ -3,9 +3,11 @@
 namespace Modules\Clients\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 use Modules\Clients\App\Http\Requests\ClientRequest;
-use Modules\Clients\App\Models\Tenant;
+use Modules\Clients\App\Jobs\SendClientCredentialsJob;
+use Modules\Clients\App\Services\ClientService;
 
 class ClientsController extends Controller
 {
@@ -22,19 +24,23 @@ class ClientsController extends Controller
      * 
      * @return [type]
      */
-    public function store(ClientRequest $request)
+    public function store(ClientRequest $request, ClientService $clientService): RedirectResponse
     {
-        $tenant = Tenant::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'mobile' => $request->mobile,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $plainPassword = $request->password;
 
-        $tenant->domains()->create([
-            'domain' => "{$request->subdomain}." . env('CENTRAL_DOMAIN'),
-        ]);
+            $tenant = $clientService->createTenant($request->validated());
 
-        return redirect()->route('clients.create')->with('success', 'Client created successfully!');
+            SendClientCredentialsJob::dispatch($tenant, $plainPassword);
+
+            return redirect()->route('clients.create')->with('success', 'Client created successfully!');
+        } catch (ValidationException $e) {
+            return redirect()->route('clients.create')
+                ->withErrors($e->errors())
+                ->withInput();
+        } catch (\Exception $e) {
+            return redirect()->route('clients.create')
+                ->with('error', 'An error occurred while creating the client.');
+        }
     }
 }

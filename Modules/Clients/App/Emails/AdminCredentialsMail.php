@@ -14,7 +14,7 @@ class AdminCredentialsMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public $user, public $domain)
+    public function __construct(public $user, public $domain, public $password)
     {
         //
     }

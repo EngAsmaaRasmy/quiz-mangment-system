@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignUuid('quiz_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('answer_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
+
+            $table->primary(['user_id', 'quiz_id', 'question_id']);
         });
     }
 

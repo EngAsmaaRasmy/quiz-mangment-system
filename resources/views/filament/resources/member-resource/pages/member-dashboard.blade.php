@@ -16,7 +16,7 @@
                         {{ $quiz->questions_count }} Questions
                     </div>
                     <h3 class="text-lg font-bold text-white mt-2">{{ $quiz->title }}</h3>
-                    <p class="mt-2 text-sm text-gray-400 line-clamp-3">{{ $quiz->description }}</p>
+                    <p class="mt-2 text-sm text-gray-400 line-clamp-3">{!! $quiz->description !!}</p>
 
 
                     @if ($quiz->results->isNotEmpty())

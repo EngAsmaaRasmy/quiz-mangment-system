@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         //observe tenant model
-        Tenant::observe(TenantObserver::class);
+        // Tenant::observe(TenantObserver::class);
         User::observe(UserObserver::class);
     }
 }

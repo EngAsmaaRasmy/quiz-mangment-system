@@ -4,11 +4,11 @@
 Your admin account has been created. Below are your login credentials:
 
 - **Email:** {{ $user->email }}
-{{-- - **Password:** {{ $password }} --}}
+- **Password:** {{ $password }}
 
 You can access your dashboard using the link below:
 
-@component('mail::button', ['url' => 'https://' . $domain])
+@component('mail::button', ['url' => 'https://' . $domain . '/admin'])
 Go to Dashboard
 @endcomponent
 

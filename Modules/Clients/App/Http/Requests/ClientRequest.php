@@ -43,6 +43,10 @@ class ClientRequest extends FormRequest
             'email.unique' => 'This email is already in use.',
             'mobile.required' => 'Please provide a valid mobile number.',
             'mobile.regex' => 'Please provide a valid phone number (e.g., +1234567890).',
+            'password.required' => 'Please provide a password.',
+            'password.confirmed' => 'The password confirmation does not match.',
+            'subdomain.required' => 'Please provide a subdomain.',
+            'subdomain.unique' => 'This subdomain is already taken.',
         ];
     }
 }

@@ -20,7 +20,7 @@ class SendClientCredentialsJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(protected Tenant $tenant)
+    public function __construct(protected Tenant $tenant, public string $plainPassword)
     {
     }
 
@@ -46,6 +46,6 @@ class SendClientCredentialsJob implements ShouldQueue
         $user->assignRole($adminRole);
 
         // Send email with login credentials
-        Mail::to($user->email)->send(new AdminCredentialsMail($user, $this->tenant->domains()->first()->domain));
+        Mail::to($user->email)->send(new AdminCredentialsMail($user, $this->tenant->domains()->first()->domain, $this->plainPassword));
     }
 }
