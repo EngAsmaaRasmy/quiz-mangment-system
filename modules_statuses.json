@@ -1,0 +1,6 @@
+{
+    "Clients": true,
+    "Members": true,
+    "ACL": true,
+    "Quizzes": true
+}
